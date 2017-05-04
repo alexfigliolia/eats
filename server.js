@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
  next();
 });
 
-var staticFiles = express.static(path.join(__dirname, 'build/static'));
+var staticFiles = express.static(path.join(__dirname, 'client/build'));
 app.use(staticFiles)
 
 // router.get('*', function(req, res) {

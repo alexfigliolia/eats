@@ -1,0 +1,16 @@
+@import 'variables';
+@import 'reset';
+
+.App {
+	@include center;
+	flex-direction: column;
+	font-family: "Playfair Display", "Raleway", sans-serif;
+	background: #E9ECF0;
+}
+
+@import 'header/header';
+@import 'banner/banner';
+@import 'search/search';
+@import 'list/list';
+@import 'flickity';
+@import 'place/place';

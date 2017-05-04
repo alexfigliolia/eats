@@ -1,0 +1,113 @@
+.list {
+	position: absolute;
+	top: 0;
+	left: 0;
+	// padding: 20px 0;
+	// width: 95%;
+	// max-width: 1200px;
+	min-height: 100%;
+	width: 100%;
+	visibility: hidden;
+	color: #fff;
+	@include center;
+	@include headerShadow;
+	margin-bottom: 20px;
+	@include background-right;
+	// overflow-y: auto;
+	&>div {
+		@include center;
+		width: 100%;
+		flex-direction: column;
+		margin-bottom: 20px;
+		&>h1 {
+			margin-top: 0;
+			font-family: "Raleway", sans-serif;
+			margin-bottom: 30px;
+		}
+		&>.results {
+			@include center;
+			flex-direction: row;
+			flex-wrap: wrap;
+			width: 100%;
+			&>.result{
+				cursor: pointer;
+				width: 90%;
+				max-width: 300px;
+				height: 250px;
+				@include center;
+				flex-direction: column;
+				margin: 10px;
+				background: #131313;
+				@include headerShadow;
+				border-top-left-radius: 2.5px;
+				border-top-right-radius: 2.5px;
+				transform: translateY(100%);
+				opacity: 0;
+				transition-duration: 0.5s;
+				@media #{$mq-800}{
+					height: 300px;
+					max-width: 325px;
+				}
+				&>h2 {
+					font-family: "Raleway", sans-serif;
+					color: #000;
+					font-size: 1em;
+					font-weight: 500;
+					height: 70px;
+					@include center;
+					margin: 0;
+					background: #fff;
+					width: 100%;
+					text-align: center;
+					border-bottom-left-radius: 2.5px;
+					border-bottom-right-radius: 2.5px;
+				}
+				&>.result-img {
+					@include center;
+					overflow: hidden;
+					width: 100%;
+					height: 100%;
+					background: #131313;
+					border-top-left-radius: 2.5px;
+					border-top-right-radius: 2.5px;
+					&>img {
+						height: 100%;
+						width: auto;
+					}
+				}
+			}
+			.result-show{
+				transform: translateY(0%);
+				opacity: 1;
+				transition-duration: 0.3s;
+			}
+		}
+	}
+	&>.load-more {
+		@include headerShadow;
+		height: 50px;
+		width: 200px;
+		background: #fff;
+		color: #000;
+		border: none;
+		outline: none;
+		margin-bottom: 40px;
+		margin-top: 10px;
+		font-family: "Raleway", sans-serif;
+		font-weight: 900;
+		transition-duration: 0.3s;
+	}
+	&>.load-more-animate{
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		background: #fff url('../public/icons/loader.gif') no-repeat center;
+		background-size: 70%;
+		transition: width 0.3s 0s, border-radius 0.3s 0s, background 0.3s 0s;
+	}
+}
+
+.list-show {
+	height: auto;
+	visibility: visible;
+}

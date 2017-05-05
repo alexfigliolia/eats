@@ -23,6 +23,9 @@
 			margin-top: 0;
 			font-family: "Raleway", sans-serif;
 			margin-bottom: 30px;
+			@media #{$mq-800} {
+				margin-top: 20px;
+			}
 		}
 		&>.results {
 			@include center;

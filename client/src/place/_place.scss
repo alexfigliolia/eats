@@ -9,6 +9,7 @@
 	background: #E9ECF0;
 	z-index: 30;
 	transform: scale(0);
+	transition: transform 0s 0.4s;
 	overflow-y: scroll;
 	@media #{$mq-800} {
 		top: 80px;
@@ -36,10 +37,10 @@
 				opacity: 0;
 				transform: translateY(100%);
 				transition-duration: 0.3s;
+				background: #000;
 				&>div {
 					width: 100%;
 					@include center;
-					background: #000;
 				}
 			}
 			& img {
@@ -187,6 +188,7 @@
 }
 .place-show {
 	transform: scale(1);
+	transition: transform 0s 0s;
 	&>div>.place-image>div{
 		opacity: 1;
 		transform: translateY(0%);
@@ -215,6 +217,7 @@
 	background: #E9ECF0;
 	@include headerShadow;
 	transform: scale(0);
+	transition-duration: 0.3s;
 }
 .dot-show{
 	transform: scale(1);

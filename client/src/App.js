@@ -17,8 +17,8 @@ class App extends Component {
       cityId: "",
       data: [],
       rData: {},
+      logoClasses: "logo",
       bannerClasses: "banner",
-      searchIconClasses: "search-icon search-icon-animate",
       searchButtonClasses: "search-btn",
       searchButtonText: "Feed Me!",
       listClasses: "list",
@@ -39,18 +39,6 @@ class App extends Component {
       300,
       'easeOutQuad'
     );
-  }
-
-  toggleSearch(){
-    if(this.state.searchIconClasses === "search-icon search-icon-animate") {
-      this.setState({
-        searchIconClasses: "search-icon"
-      });
-    } else {
-      this.setState({
-        searchIconClasses: "search-icon search-icon-animate"
-      });
-    }
   }
 
   setHeight(el1, el2){
@@ -173,7 +161,11 @@ class App extends Component {
               d.classList.add('dot-expand');
               setTimeout(function(){
                   p.classList.add('place-show');
+                  p.scrollTop = 0;
                   document.body.style.overflow = 'hidden';
+                  self.setState({
+                    logoClasses: "logo logo-back"
+                  });
               }, 700);
           })
           .catch(function (error) {
@@ -184,13 +176,52 @@ class App extends Component {
     }
   }
 
+  backToResults(e){
+    if(e.target.className === "logo logo-back" || e.target.tagName === "IMG") {
+      var d = document.getElementById('dot'),
+          p = document.getElementById('place');
+      p.classList.remove('place-show');
+      setTimeout(function(){
+        d.classList.remove('dot-expand');
+        document.body.style.overflow = 'auto';
+        this.setState({
+          logoClasses: "logo"
+        })
+      }.bind(this), 200)
+      setTimeout(function(){
+        d.classList.remove('dot-show');
+      }, 1000)
+    }
+  }
+
+  backToSearch(){
+    var s = document.getElementById('search'),
+        r = document.getElementsByClassName('result');
+    for(var i = 0; i<r.length; i++){
+      r[i].classList.remove('result-show');
+    }
+    setTimeout(function(){
+      this.setState({
+        listClasses: "list",
+        searchButtonClasses: "search-btn"
+      });
+      s.style.height = 'auto';
+    }.bind(this), 400)
+    setTimeout(function(){
+      this.setState({
+        searchButtonText: "Feed Me!"
+      })
+    }.bind(this), 1400)
+  }
+
   render() {
     return (
       <div className="App">
 
         <Header 
-          classes={this.state.searchIconClasses}
-          toggleSearch={this.toggleSearch.bind(this)} />
+          logoClasses={this.state.logoClasses}
+          back={this.backToResults.bind(this)}
+          search={this.backToSearch.bind(this)} />
 
         <Banner
           classes={this.state.bannerClasses}

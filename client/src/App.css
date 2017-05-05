@@ -977,18 +977,12 @@ th {
           height: 400px; } }
       .place > div > .place-image > div {
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         opacity: 0;
         transform: translateY(100%);
         transition-duration: 0.3s;
         background: #000; }
         .place > div > .place-image > div > div {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center; }
+          width: 100%; }
       .place > div > .place-image img {
         width: 100%;
         height: auto;

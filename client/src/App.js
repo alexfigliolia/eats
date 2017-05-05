@@ -213,12 +213,12 @@ class App extends Component {
           searchButtonClasses: "search-btn"
         });
         s.style.height = 'auto';
-      }.bind(this), 400)
+      }.bind(this), 450)
       setTimeout(function(){
         this.setState({
           searchButtonText: "Feed Me!"
         })
-      }.bind(this), 1400);
+      }.bind(this), 1450);
     }
   }
 

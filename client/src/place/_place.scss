@@ -27,10 +27,17 @@
 			min-height: 200px;
 			max-height: 400px;
 			overflow: hidden;
-			margin: 0;
+			margin: auto;
 			width: 100%;
 			margin-bottom: 20px;
 			@include headerShadow;
+			height: 200px;
+			@media #{$mq-550} {
+				height: 300px;
+			}
+			@media #{$mq-670} {
+				height: 400px;
+			}
 			&>div{
 				width: 100%;
 				@include center;
@@ -48,7 +55,7 @@
 				height: auto;
 				min-height: 200px;
 				position: relative;
-				background: #000;
+				@include center;
 				@media #{$mq-670} {
 					min-height: 400px;
 				}

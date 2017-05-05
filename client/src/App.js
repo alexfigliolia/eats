@@ -195,23 +195,31 @@ class App extends Component {
   }
 
   backToSearch(){
-    var s = document.getElementById('search'),
-        r = document.getElementsByClassName('result');
-    for(var i = 0; i<r.length; i++){
-      r[i].classList.remove('result-show');
+    if(this.state.searchButtonText === "Feed Me!") {
+      scrollIt(
+        document.getElementById('search'),
+        300,
+        'easeOutQuad'
+      );
+    } else {
+      var s = document.getElementById('search'),
+          r = document.getElementsByClassName('result');
+      for(var i = 0; i<r.length; i++){
+        r[i].classList.remove('result-show');
+      }
+      setTimeout(function(){
+        this.setState({
+          listClasses: "list",
+          searchButtonClasses: "search-btn"
+        });
+        s.style.height = 'auto';
+      }.bind(this), 400)
+      setTimeout(function(){
+        this.setState({
+          searchButtonText: "Feed Me!"
+        })
+      }.bind(this), 1400);
     }
-    setTimeout(function(){
-      this.setState({
-        listClasses: "list",
-        searchButtonClasses: "search-btn"
-      });
-      s.style.height = 'auto';
-    }.bind(this), 400)
-    setTimeout(function(){
-      this.setState({
-        searchButtonText: "Feed Me!"
-      })
-    }.bind(this), 1400)
   }
 
   render() {

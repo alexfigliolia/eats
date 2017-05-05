@@ -964,10 +964,17 @@ th {
       min-height: 200px;
       max-height: 400px;
       overflow: hidden;
-      margin: 0;
+      margin: auto;
       width: 100%;
       margin-bottom: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+      height: 200px; }
+      @media (min-width: 550px) {
+        .place > div > .place-image {
+          height: 300px; } }
+      @media (min-width: 670px) {
+        .place > div > .place-image {
+          height: 400px; } }
       .place > div > .place-image > div {
         width: 100%;
         display: flex;
@@ -987,7 +994,9 @@ th {
         height: auto;
         min-height: 200px;
         position: relative;
-        background: #000; }
+        display: flex;
+        justify-content: center;
+        align-items: center; }
         @media (min-width: 670px) {
           .place > div > .place-image img {
             min-height: 400px; } }

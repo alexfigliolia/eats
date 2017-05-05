@@ -3,11 +3,19 @@ import Flickity from 'flickity';
 
 
 class Place extends Component {
+  componentDidMount() {
+      const carousel = this.refs.carousel;
+      const options = {"contain": true, "setGallerySize" : true, "percentPosition": false, "cellAlign": "left"}
+      this.flkty = new Flickity(carousel, options);
+  }
+  componentDidUpdate(prevProps, prevState) {
+      this.flkty.select(0);
+  }
   render() {
     return (
     	<div className="place" id="place">
     		<div>
-                <div className='place-image carousel' ref='carousel' data-flickity='{"contain": true, "setGallerySize" : true, "percentPosition": false, "cellAlign": "center" }'>
+                <div className='place-image carousel' ref='carousel'>
                     <img src={this.props.images[0]} alt='restaurant' />
                     <img src={this.props.images[1]} alt='restaurant' />
                     <img src={this.props.images[2]} alt='restaurant' />

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Header from './header/Header.js';
-import Banner from './banner/Banner.js';
-import Search from './search/Search.js';
-import Place from './place/Place.js';
+import Header from './header/Header';
+import Banner from './banner/Banner';
+import Search from './search/Search';
+import Place from './place/Place';
 import axios from 'axios';
 import './App.css';
 
@@ -33,7 +33,7 @@ class App extends Component {
     }
   }
 
-  scrollDown(){
+  scrollDown = () => {
     scrollIt(
       document.getElementById('search'),
       300,
@@ -41,16 +41,16 @@ class App extends Component {
     );
   }
 
-  setHeight(el1, el2){
+  setHeight = (el1, el2) => {
       el1.style.height = el2.clientHeight + 'px';
   }
 
-  conductSearch(userShit){
-    var self = this;
+  conductSearch = (userShit) => {
+    let self = this;
     axios.post('/data', userShit)
-      .then(function (response) {
+      .then(function(response) {
         console.log(response);
-        var r = response.data.length - 1,
+        let r = response.data.length - 1,
             d = response.data[r],
             stateData = self.state.data,
             l = document.getElementById('list'),
@@ -73,13 +73,13 @@ class App extends Component {
           );
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   }
 
-  searchInfo(a, b, c, d){
-    var userShit = {city : a, cuisine: b, matchRating: c, budget: d, offset: 0}
+  searchInfo = (a, b, c, d) => {
+    const userShit = {city : a, cuisine: b, matchRating: c, budget: d, offset: 0}
     if(userShit.city !== ''){
       this.setState({
         city : a,
@@ -100,14 +100,14 @@ class App extends Component {
     }
   }
 
-  loadMore(){
-    var offset = this.state.offset + 20;
+  loadMore = () => {
+    const offset = this.state.offset + 20;
     this.setState({
       offset: offset,
       loadMoreClasses: "load-more load-more-animate",
       loadMoreText: ""
     })
-    var userShit = {
+    const userShit = {
       city : this.state.city, 
       cuisine: this.state.cuisine, 
       matchRating: this.state.matchRating, 
@@ -117,40 +117,39 @@ class App extends Component {
     this.conductSearch(userShit);
   }
 
-  viewMore(e){
+  viewMore = (e) => {
     if(e.target.classList.contains('trigger-search')) {
-      var place = e.target.dataset.place,
+      const place = e.target.dataset.place,
           s = {place: place},
           m = document.getElementsByClassName('result'),
           d = document.getElementById('dot'),
-          p = document.getElementById('place'),
-          self = this;
+          p = document.getElementById('place');
       for(var i = 0; i<m.length; i++){
           if(m[i].dataset.place === place) {
-              var left = (m[i].offsetLeft + (m[i].offsetWidth / 2)) - 35;
-              var top  = (m[i].offsetTop + (m[i].offsetHeight / 2)) - 60;
+              let left = (m[i].offsetLeft + (m[i].offsetWidth / 2)) - 35;
+              let top  = (m[i].offsetTop + (m[i].offsetHeight / 2)) - 60;
               d.style.top = top + 'px';
               d.style.left = left + 'px';
               d.classList.add('dot-show');
           }
       }
       axios.post('/place', s)
-          .then(function (response) {
-              var c = [],
+          .then((response) => {
+              let c = [],
                   im = response.data.photos, 
                   a = response.data.location.address1, 
                   price = response.data.price, 
                   r = response.data.rating;
               console.log(response.data);
               for(var i = 0; i<response.data.categories.length; i++){
-                var cat = response.data.categories[i].title;
+                let cat = response.data.categories[i].title;
                 c.push(cat);
               }
               if(price === "$$$$") {price = "More Expensive";}
               if(price === "$$$") {price = "Moderate";}
               if(price === "$$") {price = "Cost Effective";}
               if(price === "$") {price = "Cheaper";}
-              self.setState({
+              this.setState({
                   rData: response.data,
                   address: a,
                   categories: c,
@@ -159,16 +158,16 @@ class App extends Component {
                   imgs: im 
               });
               d.classList.add('dot-expand');
-              setTimeout(function(){
+              setTimeout(() => {
                   p.classList.add('place-show');
                   p.scrollTop = 0;
                   document.body.style.overflow = 'hidden';
-                  self.setState({
+                  this.setState({
                     logoClasses: "logo logo-back"
                   });
               }, 700);
           })
-          .catch(function (error) {
+          .catch((error) => {
               console.log(error);
               d.classList.remove('dot-show');
               document.body.style.overflow = 'auto';
@@ -176,25 +175,25 @@ class App extends Component {
     }
   }
 
-  backToResults(e){
+  backToResults = (e) => {
     if(e.target.className === "logo logo-back" || e.target.tagName === "IMG") {
-      var d = document.getElementById('dot'),
-          p = document.getElementById('place');
+      const d = document.getElementById('dot'),
+            p = document.getElementById('place');
       p.classList.remove('place-show');
-      setTimeout(function(){
+      setTimeout(() => {
         d.classList.remove('dot-expand');
         document.body.style.overflow = 'auto';
         this.setState({
           logoClasses: "logo"
         })
-      }.bind(this), 200)
-      setTimeout(function(){
+      }, 200)
+      setTimeout(() => {
         d.classList.remove('dot-show');
       }, 1000)
     }
   }
 
-  backToSearch(){
+  backToSearch = () => {
     if(this.state.searchButtonText === "Feed Me!") {
       scrollIt(
         document.getElementById('search'),
@@ -202,47 +201,47 @@ class App extends Component {
         'easeOutQuad'
       );
     } else {
-      var s = document.getElementById('search'),
-          r = document.getElementsByClassName('result');
+      const s = document.getElementById('search'),
+            r = document.getElementsByClassName('result');
       for(var i = 0; i<r.length; i++){
         r[i].classList.remove('result-show');
       }
-      setTimeout(function(){
+      setTimeout(() => {
         this.setState({
           listClasses: "list",
           searchButtonClasses: "search-btn"
         });
         s.style.height = 'auto';
-      }.bind(this), 450)
-      setTimeout(function(){
+      }, 450)
+      setTimeout(() => {
         this.setState({
           searchButtonText: "Feed Me!"
         })
-      }.bind(this), 1450);
+      }, 1450);
     }
   }
 
-  render() {
+  render = () => {
     return (
       <div className="App">
 
         <Header 
           logoClasses={this.state.logoClasses}
-          back={this.backToResults.bind(this)}
-          search={this.backToSearch.bind(this)} />
+          back={this.backToResults}
+          search={this.backToSearch} />
 
         <Banner
           classes={this.state.bannerClasses}
-          scrollDown={this.scrollDown.bind(this)} />
+          scrollDown={this.scrollDown} />
 
         <Search
-          search={this.searchInfo.bind(this)}
+          search={this.searchInfo}
           searchButtonClasses={this.state.searchButtonClasses}
           searchButtonText={this.state.searchButtonText} 
           data={this.state.data}
           listClasses={this.state.listClasses}
-          viewMore={this.viewMore.bind(this)}
-          loadMore={this.loadMore.bind(this)}
+          viewMore={this.viewMore}
+          loadMore={this.loadMore}
           loadButtonClasses={this.state.loadMoreClasses}
           loadButtonText={this.state.loadMoreText} />
 

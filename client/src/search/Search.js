@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import List from '../list/List.js';
-import Dot from '../place/Dot.js';
+import List from '../list/List';
+import Dot from '../place/Dot';
 
 class Search extends Component {
 
-  onSubmit(){
-    var city = this.refs.city.value;
-    var cuisine = this.refs.cuisine.value;
-    var matchRating = this.refs.matchRating.value;
-    var budget = this.refs.budget.value;
+  onSubmit = () => {
+    const city = this.refs.city.value,
+          cuisine = this.refs.cuisine.value,
+          matchRating = this.refs.matchRating.value,
+          budget = this.refs.budget.value;
     this.props.search(city, cuisine, matchRating, budget);
   }
 
@@ -50,7 +50,7 @@ class Search extends Component {
     					</select>
       			</div>
       		</div>
-      		<button className={this.props.searchButtonClasses} onClick={this.onSubmit.bind(this)}>{this.props.searchButtonText}</button>
+      		<button className={this.props.searchButtonClasses} onClick={this.onSubmit}>{this.props.searchButtonText}</button>
       	</div>
         <List 
           data={this.props.data}

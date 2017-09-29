@@ -1,16 +1,19 @@
 //server.js
 'use strict'
 //first we import our dependencies…
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
-var yelp = require('yelp-fusion');
-//and create our instances
-var app = express();
-var router = express.Router();
-//set our port to either a predetermined port number if you have set 
-//it up, or 3001
-var port = process.env.API_PORT || 3001;
+const express = require('express'),
+			bodyParser = require('body-parser'),
+			path = require('path'),
+			yelp = require('yelp-fusion'),
+			//and create our instances
+			app = express(),
+			router = express.Router(),
+			//set our port to either a predetermined port number if you have set 
+			//it up, or 3001
+			port = process.env.API_PORT || 3001,
+			staticFiles = express.static(path.join(__dirname, 'client/build')),
+			clientId = '6oY5jnl_5kh_jIegdVErKQ',
+			clientSecret = 'YC1hQQ901vBStXUMh8kYGdCJh4IFKX4EBBX82vodDmz3ZQYNkVZ87A8EhqIkq3kY';
 
 //now we should configure the API to use bodyParser and look for 
 //JSON data in the request body
@@ -28,32 +31,28 @@ app.use(function(req, res, next) {
  next();
 });
 
-var staticFiles = express.static(path.join(__dirname, 'client/build'));
 app.use(staticFiles)
 
 // router.get('*', function(req, res) {
 //  res.json({ message: 'API Initialized!'});
 // });
 
-var clientId = '6oY5jnl_5kh_jIegdVErKQ';
-var clientSecret = 'YC1hQQ901vBStXUMh8kYGdCJh4IFKX4EBBX82vodDmz3ZQYNkVZ87A8EhqIkq3kY';
-
-var searchData = [];
+let searchData = [];
 
 app.post('/data', function(req, res){    
-    var city = req.body.city;
-    var cuisine = req.body.cuisine;
-    var matchRating = req.body.matchRating;
-    var budget = req.body.budget;
-    var offset = req.body.offset;
+    const city = req.body.city;
+    const cuisine = req.body.cuisine;
+    const matchRating = req.body.matchRating;
+    const	budget = req.body.budget;
+    const offset = req.body.offset;
     console.log(req.body);
-    var searchRequest = {
-	  term:cuisine,
-	  location: city,
-	  sort_by: matchRating,
-	  price: budget,
-	  offset: offset
-	};
+    const searchRequest = {
+		  term:cuisine,
+		  location: city,
+		  sort_by: matchRating,
+		  price: budget,
+		  offset: offset
+		};
     yelp.accessToken(clientId, clientSecret).then(response => {
 	  const client = yelp.client(response.jsonBody.access_token);
 
@@ -71,7 +70,7 @@ app.post('/data', function(req, res){
 })
 
 app.post('/place', function(req, res){
-	var place = req.body.place;
+	const place = req.body.place;
 	console.log(place);
 	// });
 	yelp.accessToken(clientId, clientSecret).then(response => {

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Result from './Result.js';
 
 class List extends Component {
-  render() {
+  render = () => {
     return (
         <div className={this.props.listClasses} id='list'>
             <div>
                 <h1>Search Results</h1>
                 <div className="results" onClick={this.props.viewMore}>
 				          {
-                  	this.props.data.map(function(restaurant, i){
+                  	this.props.data.map((restaurant, i) => {
                   	  return (
                           <Result 
                             key={i}

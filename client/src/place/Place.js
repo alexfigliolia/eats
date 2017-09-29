@@ -4,8 +4,8 @@ import Flickity from 'flickity';
 
 class Place extends Component {
   componentDidMount() {
-      const carousel = this.refs.carousel;
-      const options = {"contain": true, "setGallerySize" : true, "percentPosition": false, "cellAlign": "left"}
+      const carousel = this.refs.carousel,
+            options = {"contain": true, "setGallerySize" : true, "percentPosition": false, "cellAlign": "left"}
       this.flkty = new Flickity(carousel, options);
   }
   componentDidUpdate(prevProps, prevState) {

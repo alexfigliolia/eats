@@ -1,19 +1,17 @@
 //server.js
 'use strict'
 //first we import our dependencies…
-const express = require('express'),
-			bodyParser = require('body-parser'),
-			path = require('path'),
-			yelp = require('yelp-fusion'),
-			//and create our instances
-			app = express(),
-			router = express.Router(),
-			//set our port to either a predetermined port number if you have set 
-			//it up, or 3001
-			port = process.env.API_PORT || 3001,
-			staticFiles = express.static(path.join(__dirname, 'client/build')),
-			clientId = '6oY5jnl_5kh_jIegdVErKQ',
-			clientSecret = 'YC1hQQ901vBStXUMh8kYGdCJh4IFKX4EBBX82vodDmz3ZQYNkVZ87A8EhqIkq3kY';
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const yelp = require('yelp-fusion');
+
+const app = express();
+const router = express.Router();
+const port = process.env.PORT || 3001;
+const staticFiles = express.static(path.join(__dirname, 'client/build'));
+const clientId = '6oY5jnl_5kh_jIegdVErKQ';
+const clientSecret = 'PdpLUWvvy-MwnVNbmxB1YrAy4L79eGj5JVLk1AkdAy_YifPE5OmZK0kAHRjuniTbGMB9c94tl3MWIvyVt5pkUUC4yV2CBh7GlShQwGxPvugKaGhBLPj2KoJmWkwCWXYx';
 
 //now we should configure the API to use bodyParser and look for 
 //JSON data in the request body
@@ -36,51 +34,44 @@ app.use(staticFiles)
 // router.get('*', function(req, res) {
 //  res.json({ message: 'API Initialized!'});
 // });
+const client = yelp.client('PdpLUWvvy-MwnVNbmxB1YrAy4L79eGj5JVLk1AkdAy_YifPE5OmZK0kAHRjuniTbGMB9c94tl3MWIvyVt5pkUUC4yV2CBh7GlShQwGxPvugKaGhBLPj2KoJmWkwCWXYx');
 
 let searchData = [];
 
 app.post('/data', function(req, res){    
-    const city = req.body.city;
-    const cuisine = req.body.cuisine;
-    const matchRating = req.body.matchRating;
-    const	budget = req.body.budget;
-    const offset = req.body.offset;
-    console.log(req.body);
-    const searchRequest = {
-		  term:cuisine,
-		  location: city,
-		  sort_by: matchRating,
-		  price: budget,
-		  offset: offset
-		};
-    yelp.accessToken(clientId, clientSecret).then(response => {
-	  const client = yelp.client(response.jsonBody.access_token);
+  const city = req.body.city;
+  const cuisine = req.body.cuisine;
+  const matchRating = req.body.matchRating;
+  const	budget = req.body.budget;
+  const offset = req.body.offset;
+  console.log(req.body);
+  const searchRequest = {
+	  term:cuisine,
+	  location: city,
+	  sort_by: matchRating,
+	  price: budget,
+	  offset: offset
+	};
 
-	  client.search(searchRequest).then(response => {
-	    const firstResult = response.jsonBody.businesses;
-	    const prettyJson = JSON.stringify(firstResult, null, 4);
-	    // console.log(prettyJson);
-	    searchData.push(firstResult);
-	    res.send(searchData);
-	    console.log(searchData);
-	  });
-	}).catch(e => {
+  client.search(searchRequest).then(response => {
+    const firstResult = response.jsonBody.businesses;
+    const prettyJson = JSON.stringify(firstResult, null, 4);
+    // console.log(prettyJson);
+    searchData.push(firstResult);
+    res.send(searchData);
+    console.log(searchData);
+  })
+	.catch(e => {
 	  console.log(e);
 	});
-})
+});
 
 app.post('/place', function(req, res){
 	const place = req.body.place;
 	console.log(place);
-	// });
-	yelp.accessToken(clientId, clientSecret).then(response => {
-	  	const client = yelp.client(response.jsonBody.access_token);
-		client.business(place).then(response => {
-		  console.log(response.jsonBody);
-		  res.send(response.jsonBody);
-		}).catch(e => {
-		  console.log(e);
-		});
+	client.business(place).then(response => {
+	  console.log(response.jsonBody);
+	  res.send(response.jsonBody);
 	}).catch(e => {
 	  console.log(e);
 	});
